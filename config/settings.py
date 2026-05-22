@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "apps.payments",
     "apps.shipping",
     "apps.coupons",
+    "drf_spectacular",
 ]
 AUTH_USER_MODEL = "users.User"
 CELERY_BROKER_URL = "redis://redis:6379/0"
@@ -151,8 +152,8 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ),
 
-    "DEFAULT_PAGINATION_CLASS":
-        "core.pagination.StandardPagination",
+    "DEFAULT_PAGINATION_CLASS":"core.pagination.StandardPagination",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
 }
 
