@@ -32,7 +32,7 @@ services:
   celery:
     build: .
     container_name: corecommerce_celery
-    command: celery -A config worker -l info
+    command:  python -m celery -A config worker -l info
     depends_on:
       - redis
       - db
