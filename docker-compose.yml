@@ -14,6 +14,7 @@ services:
       - db
       - redis
     restart: always
+
   db:
     image: postgres:16
     container_name: corecommerce_db
@@ -24,21 +25,37 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: taofick45418
     restart: always
+
   redis:
     image: redis:7
     container_name: corecommerce_redis
     restart: always
-  
+
   celery:
     build: .
     container_name: corecommerce_celery
-    command: celery -A config worker -l info
+    command: python -m celery -A config worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
     depends_on:
       - redis
       - db
+    restart: always
+
+  beat:
+    build: .
+    container_name: corecommerce_beat
+    command: python -m celery -A config beat -l info
+    volumes:
+      - .:/app
     env_file:
       - .env
+    depends_on:
+      - redis
+      - db
     restart: always
+
 volumes:
   postgres_data:
-    

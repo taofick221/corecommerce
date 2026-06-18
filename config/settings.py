@@ -52,9 +52,11 @@ INSTALLED_APPS = [
     "apps.payments",
     "apps.shipping",
     "apps.coupons",
+    "drf_spectacular",
 ]
 AUTH_USER_MODEL = "users.User"
 CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/1"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -151,8 +153,8 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ),
 
-    "DEFAULT_PAGINATION_CLASS":
-        "core.pagination.StandardPagination",
+    "DEFAULT_PAGINATION_CLASS":"core.pagination.StandardPagination",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
 }
 
@@ -161,4 +163,10 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
+}
+CELERY_BEAT_SCHEDULE = {
+    "daily-report": {
+        "task": "apps.payments.tasks.daily_report",
+        "schedule": 60.0,
+    },
 }
