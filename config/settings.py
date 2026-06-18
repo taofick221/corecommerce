@@ -164,3 +164,9 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+CELERY_BEAT_SCHEDULE = {
+    "daily-report": {
+        "task": "apps.payments.tasks.daily_report",
+        "schedule": 60.0,
+    },
+}
