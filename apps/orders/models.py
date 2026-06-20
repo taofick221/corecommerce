@@ -18,6 +18,9 @@ class Order(models.Model):
         REFUNDED="refunded","Refunded"
     
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="orders",)
+    coupon = models.ForeignKey("coupons.Coupon",on_delete=models.SET_NULL,null=True,blank=True,related_name="orders",)
+
+    discount_amount = models.DecimalField(max_digits=10,decimal_places=2,default=Decimal("0.00"),)
     order_number=models.CharField(max_length=50,unique=True)
     status=models.CharField(max_length=20,choices=Status.choices,default=Status.PENDING)
     payment_status=models.CharField(max_length=20,choices=PaymentStatus.choices,default=PaymentStatus.PENDING)
