@@ -169,4 +169,8 @@ CELERY_BEAT_SCHEDULE = {
         "task": "apps.payments.tasks.daily_report",
         "schedule": 60.0,
     },
+    "cancel-expired-orders": {
+        "task": "apps.orders.tasks.cancel_expired_orders",
+        "schedule": 3600.0,
+    },
 }

@@ -20,4 +20,4 @@ from celery import shared_task
 
 @shared_task
 def daily_report():
-    print("Daily report task running")
+    print("Daily report task running") 

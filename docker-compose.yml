@@ -56,6 +56,18 @@ services:
       - redis
       - db
     restart: always
+  flower:
+    build: .
+    container_name: corecommerce_flower
+    command: python -m celery -A config flower
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - celery
+    env_file:
+      - .env
+    restart: always
 
 volumes:
   postgres_data:
