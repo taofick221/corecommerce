@@ -1,73 +1,73 @@
-services:
+  services:
 
-  web:
-    build: .
-    container_name: corecommerce_web
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    depends_on:
-      - db
-      - redis
-    restart: always
+    web:
+      build: .
+      container_name: corecommerce_web
+      command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+      volumes:
+        - .:/app
+      ports:
+        - "8000:8000"
+      env_file:
+        - .env
+      depends_on:
+        - db
+        - redis
+      restart: always
 
-  db:
-    image: postgres:16
-    container_name: corecommerce_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: corecommerce
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: taofick45418
-    restart: always
+    db:
+      image: postgres:16
+      container_name: corecommerce_db
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: corecommerce
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: taofick45418
+      restart: always
 
-  redis:
-    image: redis:7
-    container_name: corecommerce_redis
-    restart: always
+    redis:
+      image: redis:7
+      container_name: corecommerce_redis
+      restart: always
 
-  celery:
-    build: .
-    container_name: corecommerce_celery
-    command: python -m celery -A config worker -l info
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - db
-    restart: always
+    celery:
+      build: .
+      container_name: corecommerce_celery
+      command: python -m celery -A config worker -l info
+      volumes:
+        - .:/app
+      env_file:
+        - .env
+      depends_on:
+        - redis
+        - db
+      restart: always
 
-  beat:
-    build: .
-    container_name: corecommerce_beat
-    command: python -m celery -A config beat -l info
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - db
-    restart: always
-  flower:
-    build: .
-    container_name: corecommerce_flower
-    command: python -m celery -A config flower
-    ports:
-      - "5555:5555"
-    depends_on:
-      - redis
-      - celery
-    env_file:
-      - .env
-    restart: always
+    beat:
+      build: .
+      container_name: corecommerce_beat
+      command: python -m celery -A config beat -l info
+      volumes:
+        - .:/app
+      env_file:
+        - .env
+      depends_on:
+        - redis
+        - db
+      restart: always
+    flower:
+      build: .
+      container_name: corecommerce_flower
+      command: python -m celery -A config flower
+      ports:
+        - "5555:5555"
+      depends_on:
+        - redis
+        - celery
+      env_file:
+        - .env
+      restart: always
 
-volumes:
-  postgres_data:
+  volumes:
+    postgres_data:

@@ -165,10 +165,6 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 CELERY_BEAT_SCHEDULE = {
-    "daily-report": {
-        "task": "apps.payments.tasks.daily_report",
-        "schedule": 60.0,
-    },
     "cancel-expired-orders": {
         "task": "apps.orders.tasks.cancel_expired_orders",
         "schedule": 3600.0,
