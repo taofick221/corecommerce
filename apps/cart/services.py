@@ -13,7 +13,7 @@ def add_to_cart(user,variant,quantity):
     variant=ProductVariant.objects.select_for_update().select_related("product").get(id=variant.id)
     if not variant.product.is_active:
         raise ValidationError({"product":"Product is inactive"})
-    if not variant.product.deleted_at:
+    if variant.product.deleted_at:
         raise ValidationError({"product":"Product no longer available"})
     
     cart=get_or_create_cart(user)

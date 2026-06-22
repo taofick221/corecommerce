@@ -165,12 +165,24 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 CELERY_BEAT_SCHEDULE = {
-    "daily-report": {
-        "task": "apps.payments.tasks.daily_report",
-        "schedule": 60.0,
-    },
     "cancel-expired-orders": {
         "task": "apps.orders.tasks.cancel_expired_orders",
         "schedule": 3600.0,
+    },
+    "check-low-stock": {
+        "task": "apps.products.tasks.check_low_stock",
+        "schedule": 3600.0,
+    },
+    "disable-expired-coupons": {
+        "task": "apps.coupons.tasks.disable_expired_coupons",
+        "schedule": 3600.0,
+    },
+    "daily-revenue-report": {
+    "task": "apps.payments.tasks.generate_daily_revenue_report",
+    "schedule": 60.0,
+    },
+    "send-payment-reminder": {
+    "task": "apps.payments.tasks.send_payment_reminder",
+    "schedule": 300.0,
     },
 }
