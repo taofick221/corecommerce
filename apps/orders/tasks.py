@@ -1,4 +1,5 @@
 import logging
+import csv
 from datetime import timedelta
 from django.db import transaction
 from django.utils import timezone
@@ -38,3 +39,32 @@ def cancel_expired_orders():
         cancelled_count
     )
     return cancelled_count
+
+@shared_task
+def  export_orders_csv():
+    orders=Order.objects.select_related("user")
+    filename="/tmp/orders.csv"
+    with open(
+        filename,
+        "w",
+        newline="",
+    ) as file:
+        writer=csv.writer(file)
+        writer.writerow([
+            "Order_Number",
+            "User",
+            "Total",
+            "Status",
+        ])
+        for order in orders:
+            writer.writerow([
+                order.order_number,
+                order.user.email,
+                order.total,
+                order.status,
+            ])
+    logger.info(
+        "Orders exported. count=%s",
+        orders.count(),
+    )
+    return filename

@@ -4,7 +4,7 @@ from django.db import transaction
 from apps.orders.models import Order
 from .models import Payment
 from django.utils import timezone
-from .tasks import send_payment_email
+
 
 
 def generate_transaction_id():
@@ -51,7 +51,5 @@ def complete_payment(payment):
     order=payment.order
     order.payment_status=(Order.PaymentStatus.PAID)
     order.save(update_fields=["payment_status"])
-    transaction.on_commit(
-        lambda:send_payment_email.delay(payment.id)
-    )
+    
     return payment
