@@ -5,7 +5,7 @@ from .models import Coupon
 
 logger=logging.getLogger(__name__)
 
-@shared_task
+@shared_task(queue="maintenance")
 def disable_expired_coupons():
     expired_coupons=Coupon.objects.filter(
         is_active=True,

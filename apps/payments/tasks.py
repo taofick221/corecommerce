@@ -4,10 +4,12 @@ from celery import shared_task
 from .models import Payment
 from django.db.models import Sum
 from datetime import timedelta
+from apps.orders.models import Order
+from django.core.mail import send_mail
 
 logger=logging.getLogger(__name__)
 
-@shared_task
+@shared_task(queue="reports")
 def generate_daily_revenue_report():
     today=timezone.now().date()
     revenue=(Payment.objects.filter(
@@ -27,14 +29,14 @@ def generate_daily_revenue_report():
     )
     return str(revenue)
 
-@shared_task
+@shared_task(queue="emails")
 def send_payment_reminder():
     cutoff_time=timezone.now()-timedelta(minutes=30)
 
     payments=(Payment.objects.select_related(
         "order",
         "order__user",
-    ).prefetch_related(
+    ).filter(
         status=Payment.Status.PENDING,
         created_at__lt=cutoff_time
     ))
@@ -58,3 +60,28 @@ def send_payment_reminder():
         count
     )
     return count
+
+@shared_task(
+    queue="emails",
+    autoretry_for=(Exception,),
+    retry_backoff=True,
+    max_retries=5,
+)
+def send_order_confirmation_email(order_id):
+    order=Order.objects.select_related("user").get(id=order_id)
+
+    send_mail(
+        subject=f"Order {order.order_number} Confirmed",
+        message=(
+            f"Hello {order.full_name},\n\n"
+            f"Your order has been placed successfully.\n"
+            f"Order Number: {order.order_number}"
+        ),
+        from_email=None,
+        recipient_list=[order.user.email],
+        fail_silently=False,
+    )
+    logger.info(
+        "Order confirmation email sent. order=%s",
+        order.order_number,
+    )

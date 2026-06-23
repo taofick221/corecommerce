@@ -4,7 +4,7 @@ from .models import ProductVariant
 
 logger=logging.getLogger(__name__)
 
-@shared_task
+@shared_task(queue="inventory")
 def check_low_stock():
     low_stock_variants=ProductVariant.objects.filter(
         stock__lte=5).select_related(
