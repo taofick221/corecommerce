@@ -158,12 +158,14 @@ REST_FRAMEWORK = {
 
 }
 
-
+# authentication 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+# Celery beat 
 CELERY_BEAT_SCHEDULE = {
     "cancel-expired-orders": {
         "task": "apps.orders.tasks.cancel_expired_orders",
@@ -185,4 +187,23 @@ CELERY_BEAT_SCHEDULE = {
     "task": "apps.payments.tasks.send_payment_reminder",
     "schedule": 300.0,
     },
+}
+
+
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@corecommerce.com"
+
+
+# Redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+        "TIMEOUT": 300,
+    }
 }

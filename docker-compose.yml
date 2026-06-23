@@ -43,7 +43,21 @@
         - redis
         - db
       restart: always
-
+    celery_orders:
+      build: .
+      command: python -m celery -A config worker -Q orders -l info
+    celery_emails:
+      build: .
+      command: python -m celery -A config worker -Q emails -l info
+    celery_reports:
+      build: .
+      command: python -m celery -A config worker -Q reports -l info
+    celery_inventory:
+      build: .
+      command: python -m celery -A config worker -Q inventory -l info
+    celery_maintenance:
+      build: .
+      command: python -m celery -A config worker -Q maintenance -l info
     beat:
       build: .
       container_name: corecommerce_beat

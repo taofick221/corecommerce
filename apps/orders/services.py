@@ -5,7 +5,7 @@ from django.db import transaction
 from apps.cart.models import Cart
 from apps.products.models import ProductVariant
 from .models import Order,OrderItem
-
+from apps.payments.tasks import (send_order_confirmation_email)
 
 def generate_order_number():
     return (f"ORD-{uuid4().hex[:10].upper()}")
@@ -79,4 +79,5 @@ def create_order(user,shipping_data):
     order.total=subtotal
     order.save(update_fields=["subtotal","total",])
     cart.items.all().delete()
+    send_order_confirmation_email.delay(order.id)
     return order
