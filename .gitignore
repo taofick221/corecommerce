@@ -39,3 +39,7 @@ htmlcov/
 
 # Node (if frontend later)
 node_modules/
+
+
+
+celerybeat-schedule
