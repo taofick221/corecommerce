@@ -4,8 +4,10 @@ from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from .serializers import UserSerializer,CustomTokenSerializer
+from core.throttles import LoginRateThrottle,RegisterRateThrottle
 
 class RegisterView(APIView):
+    throttle_classes = [RegisterRateThrottle]
     def post(self,request):
         serializer=UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -16,3 +18,4 @@ class RegisterView(APIView):
 
 class CustomTokenView(TokenObtainPairView):
     serializer_class = CustomTokenSerializer
+    throttle_classes = [LoginRateThrottle]

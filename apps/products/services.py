@@ -62,6 +62,7 @@ def create_product(validated_data):
         raise ValidationError({"detail": "Duplicate SKU, variant conflict, or image validation failed"})
     return product
 
+
 @transaction.atomic
 def update_product(instance,validated_data):
     variants_data=validated_data.pop("variants",None)
@@ -166,7 +167,6 @@ def update_product(instance,validated_data):
         for img_id,obj in existing.items():
             if img_id not in incoming_ids:
                 obj.delete()
-
     return instance
 
 
