@@ -9,10 +9,15 @@ from .serializers import PaymentSerializer,CreatePaymentSerializer
 from .services import create_payment,complete_payment
 from rest_framework.response import Response
 from .selectors import get_user_payments
+from core.throttles import PaymentRateThrottle
 
 
 class CreatePaymentView(APIView):
     permission_classes=[IsAuthenticated]
+    throttle_classes = [
+        PaymentRateThrottle
+    ]
+
 
     def post(self,request,order_id):
         serializer=CreatePaymentSerializer(data=request.data)

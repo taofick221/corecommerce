@@ -6,10 +6,14 @@ from .selectors import get_user_orders,get_user_orders_by_id
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from core.throttles import OrderRateThrottle
 
 
 class CreateOrderView(APIView):
     permission_classes=[IsAuthenticated]
+    throttle_classes = [
+        OrderRateThrottle
+    ]
     def post(self,request):
         serializer=CreateOrderSerializer(data=request.data)
         serializer.is_valid(

@@ -153,9 +153,36 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ),
 
-    "DEFAULT_PAGINATION_CLASS":"core.pagination.StandardPagination",
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS":
+        "core.pagination.StandardPagination",
 
+    "DEFAULT_SCHEMA_CLASS":
+        "drf_spectacular.openapi.AutoSchema",
+        
+
+    "DEFAULT_THROTTLE_CLASSES": (
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ),
+
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/hour",
+        "user": "1000/hour",
+
+        "login": "5/min",
+        "register": "3/min",
+
+        "products": "100/min",
+
+        "orders": "20/min",
+
+        "payments": "10/min",
+    },
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "CoreCommerce API",
+    "DESCRIPTION": "Production Ecommerce API",
+    "VERSION": "1.0.0",
 }
 
 # authentication 
@@ -199,11 +226,21 @@ DEFAULT_FROM_EMAIL = "noreply@corecommerce.com"
 # Redis
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/2",
+        "BACKEND":
+            "django_redis.cache.RedisCache",
+
+        "LOCATION":
+            "redis://redis:6379/2",
+
         "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CLIENT_CLASS":
+                "django_redis.client.DefaultClient",
         },
-        "TIMEOUT": 300,
+
+        "KEY_PREFIX":
+        "corecommerce",
+
+        "TIMEOUT":
+        300,
     }
 }
