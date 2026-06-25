@@ -29,7 +29,7 @@ class ProductViewSet(ModelViewSet):
         return (
             Product.objects.filter(
                 is_active=True,
-                is_deleted=False,
+                deleted_at__isnull=True,
             )
             .select_related(
                 "category",
