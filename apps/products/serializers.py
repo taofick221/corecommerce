@@ -36,6 +36,12 @@ class ProductVariantSerializer(serializers.ModelSerializer):
             "available_stock",
         ]
 
+        extra_kwargs = {
+            "sku": {
+                "validators": [],
+            }
+        }
+
     def validate(self, data):
         price = data.get("price")
         stock = data.get("stock")
