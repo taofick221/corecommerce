@@ -1,5 +1,5 @@
 from rest_framework import status
-
+from rest_framework.views import APIView
 from .base import BaseProductTestCase
 from django.utils import timezone
 
