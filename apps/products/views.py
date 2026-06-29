@@ -50,12 +50,16 @@ class ProductViewSet(ModelViewSet):
         return ProductWriteSerializer
     
     def get_throttles(self):
+        print(f"ACTION = {self.action}")
+
         if self.action in [
             "list",
             "retrieve",
         ]:
+            print("USING PRODUCT THROTTLE")
             return [ProductRateThrottle()]
 
+        print("USING DEFAULT THROTTLE")
         return super().get_throttles()
     
     def perform_destroy(self, instance):

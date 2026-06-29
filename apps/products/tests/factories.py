@@ -60,7 +60,9 @@ class ProductFactory(factory.django.DjangoModelFactory):
         lambda n: f"Product {n}"
     )
 
-    description = factory.Faker("sentence")
+    description = factory.Faker(
+        "sentence"
+    )
 
     category = factory.SubFactory(
         CategoryFactory
@@ -82,9 +84,13 @@ class ProductVariantFactory(factory.django.DjangoModelFactory):
         ProductFactory
     )
 
-    size = "42"
+    size = factory.Sequence(
+        lambda n: str(42 + n)
+    )
 
-    color = "Black"
+    color = factory.Sequence(
+        lambda n: f"Color {n}"
+    )
 
     price = 100
 
@@ -94,7 +100,7 @@ class ProductVariantFactory(factory.django.DjangoModelFactory):
         lambda n: f"SKU{1000+n}"
     )
 
-    is_default = True
+    is_default = False
 
 
 class ProductImageFactory(factory.django.DjangoModelFactory):
@@ -106,4 +112,10 @@ class ProductImageFactory(factory.django.DjangoModelFactory):
         ProductFactory
     )
 
-    is_primary = True
+    alt_text = ""
+
+    order = factory.Sequence(
+        lambda n: n
+    )
+
+    is_primary = False
