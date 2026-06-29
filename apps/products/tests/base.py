@@ -23,10 +23,12 @@ class BaseProductTestCase(APITestCase):
 
         self.variant = ProductVariantFactory(
             product=self.product,
+            is_default=True,
         )
 
         self.image = ProductImageFactory(
             product=self.product,
+            is_primary=True,
         )
 
         self.list_url = reverse(

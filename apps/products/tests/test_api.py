@@ -14,7 +14,7 @@ class ProductListAPITest(BaseProductTestCase):
         )
 
         self.assertEqual(
-            len(response.data),
+            response.data["count"],
             1,
         )
 
@@ -22,7 +22,7 @@ class ProductListAPITest(BaseProductTestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(
-            response.data[0]["name"],
+            response.data["results"][0]["name"],
             self.product.name,
         )
 
@@ -30,7 +30,7 @@ class ProductListAPITest(BaseProductTestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(
-            response.data[0]["slug"],
+            response.data["results"][0]["slug"],
             self.product.slug,
         )
 
@@ -38,7 +38,7 @@ class ProductListAPITest(BaseProductTestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(
-            response.data[0]["category"],
+            response.data["results"][0]["category"],
             self.product.category.id,
         )
 
@@ -46,7 +46,7 @@ class ProductListAPITest(BaseProductTestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(
-            response.data[0]["brand"],
+            response.data["results"][0]["brand"],
             self.product.brand.id,
         )
 
@@ -57,7 +57,12 @@ class ProductListAPITest(BaseProductTestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(
-            len(response.data),
+            response.data["count"],
+            0,
+        )
+
+        self.assertEqual(
+            len(response.data["results"]),
             0,
         )
 
@@ -68,7 +73,12 @@ class ProductListAPITest(BaseProductTestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(
-            len(response.data),
+            response.data["count"],
+            0,
+        )
+
+        self.assertEqual(
+            len(response.data["results"]),
             0,
         )
 
@@ -77,7 +87,7 @@ class ProductListAPITest(BaseProductTestCase):
 
         self.assertIn(
             "variants",
-            response.data[0],
+            response.data["results"][0],
         )
 
     def test_list_response_contains_images(self):
@@ -85,7 +95,7 @@ class ProductListAPITest(BaseProductTestCase):
 
         self.assertIn(
             "images",
-            response.data[0],
+            response.data["results"][0],
         )
 
     def test_list_response_is_success(self):
@@ -801,7 +811,17 @@ class ProductDeleteAPITest(BaseProductTestCase):
         )
 
         self.assertEqual(
-            len(response.data),
+            response.status_code,
+            status.HTTP_200_OK,
+        )
+
+        self.assertEqual(
+            response.data["count"],
+            0,
+        )
+
+        self.assertEqual(
+            len(response.data["results"]),
             0,
         )
 
