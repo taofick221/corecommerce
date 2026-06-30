@@ -15,7 +15,12 @@ def add_to_cart(user,variant,quantity):
         raise ValidationError({"product":"Product is inactive"})
     if variant.product.deleted_at:
         raise ValidationError({"product":"Product no longer available"})
-    
+    if quantity > variant.available_stock:
+        raise ValidationError(
+            {
+                "quantity": "Not enough stock available",
+            }
+        )
     cart=get_or_create_cart(user)
     cart_item,created=(CartItem.objects.get_or_create(cart=cart,variant=variant,defaults={"quantity":quantity}))
     if not created:
