@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Order,OrderItem
 
 class CreateOrderSerializer(serializers.Serializer):
-    name=serializers.CharField(max_length=150)
+    full_name=serializers.CharField(max_length=150)
     phone=serializers.RegexField(regex=r"^\+?\d{8,15}$",
         max_length=15,trim_whitespace=True,
         error_messages={
