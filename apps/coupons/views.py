@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .selectors import get_coupon_by_code
 from .services import calculate_coupon_discount
-from .serializers import CouponSerializer
+from .serializers import CouponSerializer,ValidateCouponSerializer
 
 
 class ValidateCouponView(APIView):
@@ -15,7 +15,7 @@ class ValidateCouponView(APIView):
 
     def post(self, request):
 
-        serializer = CouponSerializer(
+        serializer = ValidateCouponSerializer(
             data=request.data
         )
 
