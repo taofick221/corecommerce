@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,8 +52,11 @@ INSTALLED_APPS = [
     "apps.payments",
     "apps.shipping",
     "apps.coupons",
+    "drf_spectacular",
 ]
-
+AUTH_USER_MODEL = "users.User"
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/1"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -132,3 +137,146 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
+REST_FRAMEWORK = {
+
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ),
+
+    "DEFAULT_PAGINATION_CLASS":
+        "core.pagination.StandardPagination",
+
+    "DEFAULT_SCHEMA_CLASS":
+        "drf_spectacular.openapi.AutoSchema",
+    
+    "EXCEPTION_HANDLER":
+    "core.exceptions.custom_exception_handler",
+        
+
+    "DEFAULT_THROTTLE_CLASSES": (
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ),
+
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/hour",
+        "user": "1000/hour",
+
+        "login": "5/min",
+        "register": "3/min",
+
+        "products": "100/min",
+
+        "orders": "20/min",
+
+        "payments": "10/min",
+    },
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "CoreCommerce API",
+    "DESCRIPTION": "Production Ecommerce API",
+    "VERSION": "1.0.0",
+}
+
+# authentication 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+# Celery beat 
+CELERY_BEAT_SCHEDULE = {
+    "cancel-expired-orders": {
+        "task": "apps.orders.tasks.cancel_expired_orders",
+        "schedule": 3600.0,
+    },
+    "check-low-stock": {
+        "task": "apps.products.tasks.check_low_stock",
+        "schedule": 3600.0,
+    },
+    "disable-expired-coupons": {
+        "task": "apps.coupons.tasks.disable_expired_coupons",
+        "schedule": 3600.0,
+    },
+    "daily-revenue-report": {
+    "task": "apps.payments.tasks.generate_daily_revenue_report",
+    "schedule": 60.0,
+    },
+    "send-payment-reminder": {
+    "task": "apps.payments.tasks.send_payment_reminder",
+    "schedule": 300.0,
+    },
+}
+
+
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@corecommerce.com"
+
+
+# Redis
+CACHES = {
+    "default": {
+        "BACKEND":
+            "django_redis.cache.RedisCache",
+
+        "LOCATION":
+            "redis://redis:6379/2",
+
+        "OPTIONS": {
+            "CLIENT_CLASS":
+                "django_redis.client.DefaultClient",
+        },
+
+        "KEY_PREFIX":
+        "corecommerce",
+
+        "TIMEOUT":
+        300,
+    }
+}
+
+
+
+# logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "standard": {
+            "format": "[{asctime}] {levelname} {name}: {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "logs/app.log",
+            "formatter": "standard",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+
+    "root": {
+        "handlers": ["console", "file"],
+        "level": "INFO",
+    },
+}
