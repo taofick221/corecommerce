@@ -1,126 +1,200 @@
-# CoreCommerce
+<div align="center">
 
-A production-ready Ecommerce REST API built with Django REST Framework using a scalable Service-Selector architecture. The project includes JWT authentication, Docker, PostgreSQL, Redis, Celery, automated testing, and production-ready best practices.
+# 🛒 CoreCommerce
+
+### Production-Ready Ecommerce REST API built with Django REST Framework
+
+A scalable backend application built using **Django REST Framework**, following a **Service–Selector Architecture** with **Docker**, **PostgreSQL**, **Redis**, **Celery**, **JWT Authentication**, and **281 Automated Tests**.
+
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![Django](https://img.shields.io/badge/Django-5.x-success?logo=django)
+![DRF](https://img.shields.io/badge/DRF-REST_API-red)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql)
+![Redis](https://img.shields.io/badge/Redis-Cache-red?logo=redis)
+![Celery](https://img.shields.io/badge/Celery-Background_Tasks-green?logo=celery)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?logo=docker)
+![Tests](https://img.shields.io/badge/Tests-281_Passing-brightgreen)
+
+</div>
 
 ---
 
-## Features
+# 📌 Overview
 
-### Authentication
+CoreCommerce is a production-style Ecommerce REST API designed using modern backend development practices.
+
+The project emphasizes:
+
+- Clean Architecture
+- Service Layer
+- Selector Layer
+- Background Processing
+- Production-ready Docker Environment
+- Comprehensive Automated Testing
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
+
 - JWT Authentication
 - User Registration
 - User Login
-- Token Refresh
+- Refresh Token
+- Password Validation
 
-### Product Management
+---
+
+## 📦 Products
+
 - Categories
 - Brands
 - Products
 - Product Variants
 - Product Images
-- Product Filtering
 - Slug-based URLs
+- Filtering
+- Pagination
 
-### Shopping Cart
+---
+
+## 🛒 Cart
+
 - Add to Cart
-- Update Cart Items
-- Remove Cart Items
+- Update Cart
+- Remove Item
 - Clear Cart
+- Automatic Total Calculation
 
-### Orders
-- Create Orders
+---
+
+## 📋 Orders
+
+- Create Order
 - Order History
 - Order Details
 - Stock Validation
 - Order Number Generation
 
-### Payments
-- Create Payments
+---
+
+## 💳 Payments
+
+- Create Payment
 - Payment History
 - Payment Details
-- Payment Status Management
+- Payment Status Tracking
 
-### Coupons
+---
+
+## 🎁 Coupons
+
 - Coupon Validation
-- Percentage Discounts
-- Fixed Discounts
+- Percentage Discount
+- Fixed Discount
 - Maximum Discount Limit
 - Minimum Order Validation
 
-### Background Tasks
+---
+
+## ⚙ Background Tasks
+
+Powered by **Celery + Redis**
+
 - Order Confirmation Email
 - Payment Reminder
-- Daily Revenue Report
-- Disable Expired Coupons
 - Cancel Expired Orders
-- Low Stock Notifications
+- Disable Expired Coupons
+- Low Stock Notification
+- Daily Revenue Report
 
-### Security
+---
+
+## 🔒 Security
+
 - JWT Authentication
 - API Throttling
 - Custom Permissions
-- Custom Exception Handling
+- Custom Exception Handler
 - Password Validation
 
 ---
 
-## Tech Stack
+# 🏗 Architecture
 
-- Python
-- Django
-- Django REST Framework
-- PostgreSQL
-- Redis
-- Celery
-- Celery Beat
-- Docker
-- Simple JWT
-- drf-spectacular (Swagger/OpenAPI)
+The project follows a layered architecture.
 
----
-
-## Project Structure
-
-```
-apps/
-│
-├── users/
-├── products/
-├── cart/
-├── orders/
-├── payments/
-├── coupons/
-│
-core/
-config/
+```text
+Client
+   │
+   ▼
+Views (API)
+   │
+   ▼
+Serializers
+   │
+   ▼
+Services
+   │
+   ▼
+Selectors
+   │
+   ▼
+Models
+   │
+   ▼
+PostgreSQL
 ```
 
-The project follows a layered architecture using:
+---
 
-- Views
-- Serializers
-- Services
-- Selectors
-- Models
+# 📁 Project Structure
+
+```text
+production-ecommerce-drf/
+
+├── apps/
+│   ├── users/
+│   ├── products/
+│   ├── cart/
+│   ├── orders/
+│   ├── payments/
+│   └── coupons/
+│
+├── config/
+├── core/
+├── requirements/
+├── logs/
+│
+├── docker-compose.yml
+├── Dockerfile
+├── manage.py
+└── README.md
+```
 
 ---
 
-## API Modules
+# 🛠 Tech Stack
 
-| Module | Status |
-|---------|--------|
-| Users | ✅ |
-| Products | ✅ |
-| Cart | ✅ |
-| Orders | ✅ |
-| Payments | ✅ |
-| Coupons | ✅ |
+| Category | Technology |
+|-----------|------------|
+| Language | Python |
+| Framework | Django |
+| API | Django REST Framework |
+| Database | PostgreSQL |
+| Authentication | JWT (SimpleJWT) |
+| Cache | Redis |
+| Background Tasks | Celery |
+| Scheduler | Celery Beat |
+| Documentation | drf-spectacular (Swagger/OpenAPI) |
+| Containerization | Docker |
 
 ---
 
-## Installation
+# 🚀 Getting Started
 
-### Clone Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/taofick221/production-ecommerce-drf.git
@@ -130,11 +204,9 @@ cd production-ecommerce-drf
 
 ---
 
-### Create Environment File
+## Create Environment File
 
 Create a `.env` file.
-
-Example:
 
 ```env
 DEBUG=True
@@ -153,7 +225,7 @@ EMAIL_HOST_PASSWORD=your_password
 
 ---
 
-### Run with Docker
+## Run with Docker
 
 ```bash
 docker compose up --build
@@ -161,7 +233,7 @@ docker compose up --build
 
 ---
 
-### Apply Migrations
+## Apply Migrations
 
 ```bash
 docker compose exec web python manage.py migrate
@@ -169,7 +241,7 @@ docker compose exec web python manage.py migrate
 
 ---
 
-### Create Superuser
+## Create Superuser
 
 ```bash
 docker compose exec web python manage.py createsuperuser
@@ -177,7 +249,7 @@ docker compose exec web python manage.py createsuperuser
 
 ---
 
-### Run Development Server
+## Run Server
 
 ```bash
 docker compose up
@@ -185,7 +257,7 @@ docker compose up
 
 ---
 
-## API Documentation
+# 📖 API Documentation
 
 Swagger UI
 
@@ -201,7 +273,7 @@ http://localhost:8000/api/schema/
 
 ---
 
-## Running Tests
+# 🧪 Running Tests
 
 Run all tests
 
@@ -211,7 +283,7 @@ docker compose exec web python manage.py test
 
 Current Result
 
-```
+```text
 Ran 281 tests
 
 OK
@@ -219,7 +291,20 @@ OK
 
 ---
 
-## Background Services
+# 📊 Modules
+
+| Module | Status |
+|----------|--------|
+| Authentication | ✅ |
+| Products | ✅ |
+| Cart | ✅ |
+| Orders | ✅ |
+| Payments | ✅ |
+| Coupons | ✅ |
+
+---
+
+# ⚡ Background Workers
 
 Start Celery Worker
 
@@ -235,50 +320,52 @@ docker compose exec celery celery -A config beat -l info
 
 ---
 
-## Main Features
+# ✅ Production Features
 
-- JWT Authentication
 - Dockerized Environment
 - PostgreSQL Database
 - Redis Cache
 - Celery Background Tasks
-- Service Layer Architecture
+- JWT Authentication
+- Service Layer
 - Selector Layer
 - API Throttling
-- Custom Exception Handler
-- Pagination
-- Filtering
 - Swagger Documentation
 - Automated Testing
 
 ---
 
-## Future Improvements
+# 🔮 Future Improvements
 
-- CI/CD with GitHub Actions
-- Coverage Reports
-- Payment Gateway Integration
-- Wishlist
+- GitHub Actions (CI/CD)
+- Test Coverage Report
+- Stripe Integration
+- SSLCOMMERZ Integration
 - Product Reviews
+- Wishlist
 - Inventory Dashboard
 - Email Verification
 
 ---
 
-## Author
+# 👨‍💻 Author
 
 **Md. Taofick Mahmoodur Rahaman**
 
-GitHub
+### GitHub
 
 https://github.com/taofick221
 
-LinkedIn
+### LinkedIn
 
 https://www.linkedin.com/in/md-taofick/
 
-Portfolio
+### Portfolio
 
 https://my-portfolio-website-steel-iota.vercel.app/
 
 ---
+
+# ⭐ Support
+
+If you find this project useful, consider giving it a ⭐ on GitHub.
