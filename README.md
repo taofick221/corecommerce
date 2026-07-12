@@ -2,12 +2,12 @@
 
 # 🛒 CoreCommerce
 
-### Production-Ready Ecommerce REST API built with Django REST Framework
+### Scalable Ecommerce REST API built with Django REST Framework
 
-A scalable backend application built using **Django REST Framework**, following a **Service–Selector Architecture** with **Docker**, **PostgreSQL**, **Redis**, **Celery**, **JWT Authentication**, and **281 Automated Tests**.
+A production-style backend application built using **Django REST Framework**, following a clean **Service–Selector Architecture** with **Docker**, **PostgreSQL**, **Redis**, **Celery**, and **JWT Authentication**.
 
-![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
-![Django](https://img.shields.io/badge/Django-5.x-success?logo=django)
+![Python](https://img.shields.io/badge/Python-3.12.13-blue?logo=python)
+![Django](https://img.shields.io/badge/Django-6.0.4-success?logo=django)
 ![DRF](https://img.shields.io/badge/DRF-REST_API-red)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql)
 ![Redis](https://img.shields.io/badge/Redis-Cache-red?logo=redis)
@@ -21,16 +21,26 @@ A scalable backend application built using **Django REST Framework**, following 
 
 # 📌 Overview
 
-CoreCommerce is a production-style Ecommerce REST API designed using modern backend development practices.
+CoreCommerce is a scalable Ecommerce REST API built with Django REST Framework.
 
-The project emphasizes:
+The project follows clean architecture principles by separating business logic into dedicated Service and Selector layers, making the codebase easier to maintain, test, and extend.
 
-- Clean Architecture
-- Service Layer
-- Selector Layer
-- Background Processing
-- Production-ready Docker Environment
+It also includes Docker-based development, Redis caching, Celery background processing, JWT authentication, and comprehensive automated testing.
+
+---
+
+# 🚀 Project Highlights
+
+- Clean Service–Selector Architecture
+- JWT Authentication
+- Dockerized Development Environment
+- PostgreSQL Database
+- Redis Cache
+- Celery Background Tasks
+- Swagger / OpenAPI Documentation
+- API Throttling
 - Comprehensive Automated Testing
+- **281 Automated Tests Passing**
 
 ---
 
@@ -38,9 +48,9 @@ The project emphasizes:
 
 ## 🔐 Authentication
 
-- JWT Authentication
 - User Registration
 - User Login
+- JWT Authentication
 - Refresh Token
 - Password Validation
 
@@ -54,15 +64,15 @@ The project emphasizes:
 - Product Variants
 - Product Images
 - Slug-based URLs
-- Filtering
+- Product Filtering
 - Pagination
 
 ---
 
 ## 🛒 Cart
 
-- Add to Cart
-- Update Cart
+- Add Product
+- Update Quantity
 - Remove Item
 - Clear Cart
 - Automatic Total Calculation
@@ -74,8 +84,8 @@ The project emphasizes:
 - Create Order
 - Order History
 - Order Details
-- Stock Validation
 - Order Number Generation
+- Stock Validation
 
 ---
 
@@ -93,7 +103,7 @@ The project emphasizes:
 - Coupon Validation
 - Percentage Discount
 - Fixed Discount
-- Maximum Discount Limit
+- Maximum Discount Support
 - Minimum Order Validation
 
 ---
@@ -106,8 +116,8 @@ Powered by **Celery + Redis**
 - Payment Reminder
 - Cancel Expired Orders
 - Disable Expired Coupons
-- Low Stock Notification
 - Daily Revenue Report
+- Low Stock Notification
 
 ---
 
@@ -116,12 +126,12 @@ Powered by **Celery + Redis**
 - JWT Authentication
 - API Throttling
 - Custom Permissions
-- Custom Exception Handler
 - Password Validation
+- Custom Exception Handler
 
 ---
 
-# 🏗 Architecture
+# 🏛 Architecture
 
 The project follows a layered architecture.
 
@@ -129,7 +139,7 @@ The project follows a layered architecture.
 Client
    │
    ▼
-Views (API)
+Views
    │
    ▼
 Serializers
@@ -152,7 +162,7 @@ PostgreSQL
 # 📁 Project Structure
 
 ```text
-production-ecommerce-drf/
+corecommerce/
 
 ├── apps/
 │   ├── users/
@@ -179,15 +189,15 @@ production-ecommerce-drf/
 
 | Category | Technology |
 |-----------|------------|
-| Language | Python |
-| Framework | Django |
+| Language | Python 3.12.13 |
+| Framework | Django 6.0.4 |
 | API | Django REST Framework |
 | Database | PostgreSQL |
-| Authentication | JWT (SimpleJWT) |
+| Authentication | Simple JWT |
 | Cache | Redis |
 | Background Tasks | Celery |
 | Scheduler | Celery Beat |
-| Documentation | drf-spectacular (Swagger/OpenAPI) |
+| API Documentation | drf-spectacular |
 | Containerization | Docker |
 
 ---
@@ -197,9 +207,9 @@ production-ecommerce-drf/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/taofick221/production-ecommerce-drf.git
+git clone https://github.com/taofick221/corecommerce.git
 
-cd production-ecommerce-drf
+cd corecommerce
 ```
 
 ---
@@ -207,6 +217,8 @@ cd production-ecommerce-drf
 ## Create Environment File
 
 Create a `.env` file.
+
+Example:
 
 ```env
 DEBUG=True
@@ -225,7 +237,7 @@ EMAIL_HOST_PASSWORD=your_password
 
 ---
 
-## Run with Docker
+## Build Docker Containers
 
 ```bash
 docker compose up --build
@@ -233,7 +245,7 @@ docker compose up --build
 
 ---
 
-## Apply Migrations
+## Apply Database Migrations
 
 ```bash
 docker compose exec web python manage.py migrate
@@ -249,7 +261,7 @@ docker compose exec web python manage.py createsuperuser
 
 ---
 
-## Run Server
+## Start Development Server
 
 ```bash
 docker compose up
@@ -273,15 +285,28 @@ http://localhost:8000/api/schema/
 
 ---
 
-# 🧪 Running Tests
+# 🧪 Testing
 
-Run all tests
+The project includes automated tests for:
+
+- Authentication
+- Products
+- Cart
+- Orders
+- Payments
+- Coupons
+- Services
+- Serializers
+- Selectors
+- API Endpoints
+
+Run all tests:
 
 ```bash
 docker compose exec web python manage.py test
 ```
 
-Current Result
+Latest Result
 
 ```text
 Ran 281 tests
@@ -320,31 +345,62 @@ docker compose exec celery celery -A config beat -l info
 
 ---
 
-# ✅ Production Features
+# 🏛 Architecture Principles
 
-- Dockerized Environment
-- PostgreSQL Database
-- Redis Cache
-- Celery Background Tasks
-- JWT Authentication
+The project separates responsibilities into dedicated layers.
+
+- **Models** → Database layer
+- **Selectors** → Read/query operations
+- **Services** → Business logic
+- **Serializers** → Validation & transformation
+- **Views** → API endpoints
+
+This architecture improves maintainability, readability, and testability.
+
+---
+
+# 📌 Project Status
+
+✅ Active Development
+
+Completed modules:
+
+- Authentication
+- Products
+- Cart
+- Orders
+- Payments
+- Coupons
+
+Infrastructure:
+
+- Docker
+- PostgreSQL
+- Redis
+- Celery
+- Celery Beat
+
+Quality:
+
+- Layered Architecture
 - Service Layer
 - Selector Layer
-- API Throttling
-- Swagger Documentation
-- Automated Testing
+- Comprehensive Automated Tests
+- **281 Tests Passing**
 
 ---
 
 # 🔮 Future Improvements
 
-- GitHub Actions (CI/CD)
-- Test Coverage Report
+- GitHub Actions (CI)
+- CD Pipeline
+- Test Coverage Reports
 - Stripe Integration
-- SSLCOMMERZ Integration
+- SSLCommerz Integration
 - Product Reviews
 - Wishlist
-- Inventory Dashboard
 - Email Verification
+- Admin Dashboard
 
 ---
 
@@ -352,20 +408,12 @@ docker compose exec celery celery -A config beat -l info
 
 **Md. Taofick Mahmoodur Rahaman**
 
-### GitHub
-
-https://github.com/taofick221
-
-### LinkedIn
-
-https://www.linkedin.com/in/md-taofick/
-
-### Portfolio
-
-https://my-portfolio-website-steel-iota.vercel.app/
+- 🌐 Portfolio: https://my-portfolio-website-steel-iota.vercel.app/
+- 💼 LinkedIn: https://www.linkedin.com/in/md-taofick/
+- 🐙 GitHub: https://github.com/taofick221
 
 ---
 
 # ⭐ Support
 
-If you find this project useful, consider giving it a ⭐ on GitHub.
+If you found this project useful, consider giving it a ⭐ on GitHub.
