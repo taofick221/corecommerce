@@ -20,11 +20,8 @@ jobs:
       - name: Check Python Version
         run: python --version
 
-      - name: Show Current Directory
-        run: pwd
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-      - name: List Project Files
-        run: ls -la
-
-      - name: Print Message
-        run: echo "Hello CoreCommerce CI"
+      - name: Install Dependencies
+        run: pip install -r requirements/dev.txt
