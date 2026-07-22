@@ -1,19 +1,15 @@
-from .models import  Category,Brand
 from django.core.cache import cache
 
-
-
+from .models import Brand, Category
 
 CATEGORY_CACHE_KEY = "categories:list"
+
+
 def get_categories():
-    categories=cache.get(CATEGORY_CACHE_KEY)
-    
+    categories = cache.get(CATEGORY_CACHE_KEY)
+
     if categories is None:
-        categories=list(
-            Category.objects.select_related(
-                "parent"
-            ).all()
-        )
+        categories = list(Category.objects.select_related("parent").all())
         cache.set(
             CATEGORY_CACHE_KEY,
             categories,
@@ -32,9 +28,7 @@ def get_brands():
 
     if brands is None:
 
-        brands = list(
-            Brand.objects.all()
-        )
+        brands = list(Brand.objects.all())
 
         cache.set(
             BRAND_CACHE_KEY,
@@ -43,4 +37,3 @@ def get_brands():
         )
 
     return brands
-

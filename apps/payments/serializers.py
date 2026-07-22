@@ -10,9 +10,15 @@ class CreatePaymentSerializer(serializers.Serializer):
 
 class PaymentSerializer(serializers.ModelSerializer):
 
-    order_id = serializers.IntegerField(source="order.id",read_only=True,)
+    order_id = serializers.IntegerField(
+        source="order.id",
+        read_only=True,
+    )
 
-    order_number = serializers.CharField(source="order.order_number",read_only=True,)
+    order_number = serializers.CharField(
+        source="order.order_number",
+        read_only=True,
+    )
 
     class Meta:
 

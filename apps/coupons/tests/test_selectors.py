@@ -1,9 +1,6 @@
+from apps.coupons.selectors import get_coupon_by_code
+
 from .base import BaseCouponTestCase
-
-from apps.coupons.selectors import (
-    get_coupon_by_code,
-)
-
 from .factories import CouponFactory
 
 

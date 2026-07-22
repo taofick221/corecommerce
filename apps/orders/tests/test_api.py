@@ -1,10 +1,10 @@
-from django.utils import timezone
-from rest_framework import status
 from unittest.mock import patch
 
-from .base import BaseOrderTestCase
+from django.utils import timezone
+from rest_framework import status
 
-from apps.orders.models import Order
+
+from .base import BaseOrderTestCase
 
 
 class CreateOrderAPITest(BaseOrderTestCase):
@@ -229,8 +229,8 @@ class OrderDetailAPITest(BaseOrderTestCase):
 
     def test_cannot_access_other_users_order(self):
 
-        from apps.products.tests.factories import UserFactory
         from apps.orders.tests.factories import OrderFactory
+        from apps.products.tests.factories import UserFactory
 
         other_user = UserFactory()
 

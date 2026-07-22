@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path
-from decouple import config
 from datetime import timedelta
+from pathlib import Path
 
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,16 +35,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     "rest_framework",
     "django_filters",
-
     "apps.users",
     "apps.products",
     "apps.cart",
@@ -58,33 +56,33 @@ AUTH_USER_MODEL = "users.User"
 CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_RESULT_BACKEND = "redis://redis:6379/1"
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
@@ -107,16 +105,19 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator"
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -124,9 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -136,49 +137,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
 REST_FRAMEWORK = {
-
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
-
-    "DEFAULT_FILTER_BACKENDS": (
-        "django_filters.rest_framework.DjangoFilterBackend",
-    ),
-
-    "DEFAULT_PAGINATION_CLASS":
-        "core.pagination.StandardPagination",
-
-    "DEFAULT_SCHEMA_CLASS":
-        "drf_spectacular.openapi.AutoSchema",
-    
-    "EXCEPTION_HANDLER":
-    "core.exceptions.custom_exception_handler",
-        
-
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    "DEFAULT_PAGINATION_CLASS": "core.pagination.StandardPagination",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "EXCEPTION_HANDLER": "core.exceptions.custom_exception_handler",
     "DEFAULT_THROTTLE_CLASSES": (
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ),
-
     "DEFAULT_THROTTLE_RATES": {
         "anon": "100/hour",
         "user": "1000/hour",
-
         "login": "5/min",
         "register": "3/min",
-
         "products": "100/min",
-
         "orders": "20/min",
-
         "payments": "10/min",
     },
 }
@@ -188,14 +172,14 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
 }
 
-# authentication 
+# authentication
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# Celery beat 
+# Celery beat
 CELERY_BEAT_SCHEDULE = {
     "cancel-expired-orders": {
         "task": "apps.orders.tasks.cancel_expired_orders",
@@ -210,15 +194,14 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 3600.0,
     },
     "daily-revenue-report": {
-    "task": "apps.payments.tasks.generate_daily_revenue_report",
-    "schedule": 60.0,
+        "task": "apps.payments.tasks.generate_daily_revenue_report",
+        "schedule": 60.0,
     },
     "send-payment-reminder": {
-    "task": "apps.payments.tasks.send_payment_reminder",
-    "schedule": 300.0,
+        "task": "apps.payments.tasks.send_payment_reminder",
+        "schedule": 300.0,
     },
 }
-
 
 
 # Email Configuration
@@ -229,39 +212,27 @@ DEFAULT_FROM_EMAIL = "noreply@corecommerce.com"
 # Redis
 CACHES = {
     "default": {
-        "BACKEND":
-            "django_redis.cache.RedisCache",
-
-        "LOCATION":
-            "redis://redis:6379/2",
-
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
         "OPTIONS": {
-            "CLIENT_CLASS":
-                "django_redis.client.DefaultClient",
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
-
-        "KEY_PREFIX":
-        "corecommerce",
-
-        "TIMEOUT":
-        300,
+        "KEY_PREFIX": "corecommerce",
+        "TIMEOUT": 300,
     }
 }
-
 
 
 # logging
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-
     "formatters": {
         "standard": {
             "format": "[{asctime}] {levelname} {name}: {message}",
             "style": "{",
         },
     },
-
     "handlers": {
         "file": {
             "level": "INFO",
@@ -274,7 +245,6 @@ LOGGING = {
             "formatter": "standard",
         },
     },
-
     "root": {
         "handlers": ["console", "file"],
         "level": "INFO",

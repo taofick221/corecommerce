@@ -1,29 +1,21 @@
 # apps/cart/views.py
 
 from django.shortcuts import get_object_or_404
-
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import CartItem
-
-from .serializers import (
-    CartSerializer,
-    AddToCartSerializer,
-    UpdateCartItemSerializer,
-)
-
-from .services import (
-    get_or_create_cart,
-    add_to_cart,
-    update_cart_item,
-    remove_cart_item,
-    clear_cart,
-)
-
 from .selectors import get_user_cart
+from .serializers import AddToCartSerializer, CartSerializer, UpdateCartItemSerializer
+from .services import (
+    add_to_cart,
+    clear_cart,
+    get_or_create_cart,
+    remove_cart_item,
+    update_cart_item,
+)
 
 
 # ---------- CART ----------
@@ -49,13 +41,9 @@ class AddToCartView(APIView):
 
     def post(self, request):
 
-        serializer = AddToCartSerializer(
-            data=request.data
-        )
+        serializer = AddToCartSerializer(data=request.data)
 
-        serializer.is_valid(
-            raise_exception=True
-        )
+        serializer.is_valid(raise_exception=True)
 
         cart = add_to_cart(
             user=request.user,
@@ -87,25 +75,17 @@ class UpdateCartItemView(APIView):
 
         serializer = UpdateCartItemSerializer(
             data=request.data,
-            context={
-                "cart_item": cart_item
-            },
+            context={"cart_item": cart_item},
         )
 
-        serializer.is_valid(
-            raise_exception=True
-        )
+        serializer.is_valid(raise_exception=True)
 
         update_cart_item(
             cart_item=cart_item,
             quantity=serializer.validated_data["quantity"],
         )
 
-        return Response(
-            CartSerializer(
-                cart_item.cart
-            ).data
-        )
+        return Response(CartSerializer(cart_item.cart).data)
 
 
 # ---------- REMOVE ----------
@@ -116,9 +96,7 @@ class RemoveCartItemView(APIView):
     def delete(self, request, item_id):
 
         cart_item = get_object_or_404(
-            CartItem.objects.select_related(
-                "cart"
-            ),
+            CartItem.objects.select_related("cart"),
             id=item_id,
             cart__user=request.user,
         )
@@ -127,9 +105,7 @@ class RemoveCartItemView(APIView):
 
         remove_cart_item(cart_item)
 
-        return Response(
-            CartSerializer(cart).data
-        )
+        return Response(CartSerializer(cart).data)
 
 
 # ---------- CLEAR ----------
@@ -139,23 +115,8 @@ class ClearCartView(APIView):
 
     def delete(self, request):
 
-        cart = get_or_create_cart(
-            request.user
-        )
+        cart = get_or_create_cart(request.user)
 
         clear_cart(cart)
 
-        return Response(
-            CartSerializer(cart).data
-        )
-    
-
-
-
-
-
-
-
-
-
-
+        return Response(CartSerializer(cart).data)

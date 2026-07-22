@@ -3,10 +3,10 @@ from django.test import TestCase
 from apps.products.filters import ProductFilter
 
 from .factories import (
+    BrandFactory,
+    CategoryFactory,
     ProductFactory,
     ProductVariantFactory,
-    CategoryFactory,
-    BrandFactory,
 )
 
 
@@ -44,6 +44,7 @@ class ProductFilterTest(TestCase):
             price=200,
             stock=0,
         )
+
     def test_filter_by_category(self):
         queryset = ProductFilter(
             {
@@ -56,6 +57,7 @@ class ProductFilterTest(TestCase):
             queryset.count(),
             1,
         )
+
     def test_filter_by_brand(self):
         queryset = ProductFilter(
             {

@@ -1,13 +1,8 @@
-from django.core.exceptions import ObjectDoesNotExist
+from apps.payments.selectors import get_user_payments
+from apps.products.tests.factories import UserFactory
 
 from .base import BasePaymentTestCase
-
-from apps.products.tests.factories import UserFactory
 from .factories import PaymentFactory
-
-from apps.payments.selectors import (
-    get_user_payments,
-)
 
 
 class PaymentSelectorTest(BasePaymentTestCase):

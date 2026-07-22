@@ -1,13 +1,12 @@
-from decimal import Decimal
 from datetime import timedelta
+from decimal import Decimal
 
 from django.utils import timezone
-
 from rest_framework import status
 
-from .base import BaseCouponTestCase
-
 from apps.coupons.models import Coupon
+
+from .base import BaseCouponTestCase
 
 
 class ValidateCouponAPITest(BaseCouponTestCase):
@@ -93,9 +92,7 @@ class ValidateCouponAPITest(BaseCouponTestCase):
             self.user,
         )
 
-        self.coupon.valid_to = (
-            timezone.now() - timedelta(days=1)
-        )
+        self.coupon.valid_to = timezone.now() - timedelta(days=1)
 
         self.coupon.save()
 
@@ -177,9 +174,7 @@ class ValidateCouponAPITest(BaseCouponTestCase):
             self.user,
         )
 
-        self.coupon.discount_type = (
-            Coupon.DiscountType.FIXED
-        )
+        self.coupon.discount_type = Coupon.DiscountType.FIXED
 
         self.coupon.discount_value = Decimal("250.00")
 

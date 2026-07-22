@@ -1,5 +1,6 @@
-from django.test import TestCase
 from decimal import Decimal
+
+from django.test import TestCase
 
 from apps.coupons.models import Coupon
 from apps.coupons.serializers import CouponSerializer
@@ -13,9 +14,7 @@ class CouponSerializerTest(TestCase):
 
         coupon = CouponFactory()
 
-        data = CouponSerializer(
-            coupon
-        ).data
+        data = CouponSerializer(coupon).data
 
         self.assertEqual(
             data["code"],

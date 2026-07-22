@@ -1,13 +1,12 @@
-from django.test import TestCase
-from django.utils import timezone
-from rest_framework.exceptions import ValidationError
 from unittest.mock import patch
 
-from .base import BaseOrderTestCase
+from django.utils import timezone
+from rest_framework.exceptions import ValidationError
 
-from apps.orders.services import create_order
 from apps.orders.models import Order
-from apps.orders.tests.factories import OrderItemFactory
+from apps.orders.services import create_order
+
+from .base import BaseOrderTestCase
 
 
 class OrderServiceTest(BaseOrderTestCase):

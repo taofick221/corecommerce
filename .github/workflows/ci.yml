@@ -4,24 +4,43 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  hello:
+  quality-check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Check Python Version
-        run: python --version
 
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
       - name: Install Dependencies
         run: pip install -r requirements/dev.txt
+
+      - name: Check Code Formatting (Black)
+        run: black --check .
+
+      - name: Check Import Sorting (isort)
+        run: isort . --check-only
+
+      - name: Lint Code (Flake8)
+        run: flake8 .
+
+      - name: Django System Check
+        run: python manage.py check
+
+      - name: Check Missing Migrations
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: Run Tests
+        run: pytest

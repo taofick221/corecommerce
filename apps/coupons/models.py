@@ -89,11 +89,7 @@ class Coupon(models.Model):
         if now > self.valid_to:
             return False
 
-        if (
-            self.usage_limit is not None
-            and
-            self.used_count >= self.usage_limit
-        ):
+        if self.usage_limit is not None and self.used_count >= self.usage_limit:
             return False
 
         return True

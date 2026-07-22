@@ -1,11 +1,11 @@
 from rest_framework import status
 
-from .base import BasePaymentTestCase
-
-from apps.payments.models import Payment
 from apps.orders.models import Order
-from apps.products.tests.factories import UserFactory
 from apps.orders.tests.factories import OrderFactory
+from apps.payments.models import Payment
+from apps.products.tests.factories import UserFactory
+
+from .base import BasePaymentTestCase
 
 
 class CreatePaymentAPITest(BasePaymentTestCase):

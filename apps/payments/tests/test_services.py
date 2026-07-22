@@ -1,18 +1,14 @@
-from django.test import TestCase
-from unittest.mock import patch
-
 from rest_framework.exceptions import ValidationError
 
-from .base import BasePaymentTestCase
-
+from apps.orders.models import Order
 from apps.payments.models import Payment
 from apps.payments.services import (
-    create_payment,
     complete_payment,
+    create_payment,
     generate_transaction_id,
 )
 
-from apps.orders.models import Order
+from .base import BasePaymentTestCase
 
 
 class PaymentServiceTest(BasePaymentTestCase):
@@ -65,9 +61,7 @@ class PaymentServiceTest(BasePaymentTestCase):
 
     def test_cannot_pay_paid_order(self):
 
-        self.order.payment_status = (
-            Order.PaymentStatus.PAID
-        )
+        self.order.payment_status = Order.PaymentStatus.PAID
         self.order.save()
 
         with self.assertRaises(
@@ -81,9 +75,7 @@ class PaymentServiceTest(BasePaymentTestCase):
 
     def test_cannot_pay_cancelled_order(self):
 
-        self.order.status = (
-            Order.Status.CANCELLED
-        )
+        self.order.status = Order.Status.CANCELLED
         self.order.save()
 
         with self.assertRaises(

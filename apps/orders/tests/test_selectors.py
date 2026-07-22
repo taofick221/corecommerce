@@ -1,15 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
 
+from apps.orders.selectors import get_user_orders, get_user_orders_by_id
+from apps.orders.tests.factories import OrderFactory
+
 from .base import BaseOrderTestCase
-
-from apps.orders.selectors import (
-    get_user_orders,
-    get_user_orders_by_id,
-)
-
-from apps.orders.tests.factories import (
-    OrderFactory,
-)
 
 
 class OrderSelectorTest(BaseOrderTestCase):

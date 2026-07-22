@@ -1,7 +1,9 @@
-from rest_framework import status
-from rest_framework.views import APIView
-from .base import BaseProductTestCase
 from django.utils import timezone
+import uuid
+
+from rest_framework import status
+from .base import BaseProductTestCase
+
 
 class ProductListAPITest(BaseProductTestCase):
 
@@ -179,12 +181,6 @@ class ProductDetailAPITest(BaseProductTestCase):
             response.status_code,
             status.HTTP_404_NOT_FOUND,
         )
-
-import uuid
-
-from rest_framework import status
-
-from .base import BaseProductTestCase
 
 
 class ProductCreateAPITest(BaseProductTestCase):
@@ -438,11 +434,6 @@ class ProductCreateAPITest(BaseProductTestCase):
             response.data["description"],
             "Running Shoe",
         )
-
-
-from rest_framework import status
-
-from .base import BaseProductTestCase
 
 
 class ProductUpdateAPITest(BaseProductTestCase):
@@ -743,11 +734,6 @@ class ProductUpdateAPITest(BaseProductTestCase):
             response.status_code,
             status.HTTP_404_NOT_FOUND,
         )
-
-
-from rest_framework import status
-
-from .base import BaseProductTestCase
 
 
 class ProductDeleteAPITest(BaseProductTestCase):

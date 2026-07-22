@@ -17,9 +17,7 @@ class UserSerializerTest(TestCase):
             }
         )
 
-        self.assertTrue(
-            serializer.is_valid()
-        )
+        self.assertTrue(serializer.is_valid())
 
     def test_password_mismatch(self):
 
@@ -31,15 +29,11 @@ class UserSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
     def test_duplicate_email(self):
 
-        UserFactory(
-            email="test@test.com"
-        )
+        UserFactory(email="test@test.com")
 
         serializer = UserSerializer(
             data={
@@ -49,9 +43,7 @@ class UserSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
     def test_missing_password(self):
 
@@ -62,9 +54,7 @@ class UserSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
     def test_missing_confirm_password(self):
 
@@ -75,9 +65,7 @@ class UserSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
     def test_create_user(self):
 
@@ -89,9 +77,7 @@ class UserSerializerTest(TestCase):
             }
         )
 
-        self.assertTrue(
-            serializer.is_valid()
-        )
+        self.assertTrue(serializer.is_valid())
 
         user = serializer.save()
 
@@ -114,8 +100,4 @@ class UserSerializerTest(TestCase):
 
         user = serializer.save()
 
-        self.assertTrue(
-            user.check_password(
-                "Test123@"
-            )
-        )
+        self.assertTrue(user.check_password("Test123@"))

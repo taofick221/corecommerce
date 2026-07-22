@@ -1,15 +1,9 @@
-import factory
 from decimal import Decimal
 
-from apps.products.tests.factories import (
-    UserFactory,
-    ProductVariantFactory,
-)
+import factory
 
-from apps.orders.models import (
-    Order,
-    OrderItem,
-)
+from apps.orders.models import Order, OrderItem
+from apps.products.tests.factories import ProductVariantFactory, UserFactory
 
 
 class OrderFactory(factory.django.DjangoModelFactory):
@@ -19,9 +13,7 @@ class OrderFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
 
-    order_number = factory.Sequence(
-        lambda n: f"ORD-{n:06}"
-    )
+    order_number = factory.Sequence(lambda n: f"ORD-{n:06}")
 
     status = Order.Status.PENDING
 

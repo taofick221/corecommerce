@@ -1,15 +1,13 @@
-from decimal import Decimal
 from datetime import timedelta
+from decimal import Decimal
 
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
-from .base import BaseCouponTestCase
-
 from apps.coupons.models import Coupon
-from apps.coupons.services import (
-    calculate_coupon_discount,
-)
+from apps.coupons.services import calculate_coupon_discount
+
+from .base import BaseCouponTestCase
 
 
 class CouponServiceTest(BaseCouponTestCase):
@@ -28,9 +26,7 @@ class CouponServiceTest(BaseCouponTestCase):
 
     def test_fixed_discount(self):
 
-        self.coupon.discount_type = (
-            Coupon.DiscountType.FIXED
-        )
+        self.coupon.discount_type = Coupon.DiscountType.FIXED
 
         self.coupon.discount_value = Decimal("200.00")
 
@@ -50,9 +46,7 @@ class CouponServiceTest(BaseCouponTestCase):
 
         self.coupon.discount_value = Decimal("50.00")
 
-        self.coupon.maximum_discount_amount = (
-            Decimal("300.00")
-        )
+        self.coupon.maximum_discount_amount = Decimal("300.00")
 
         self.coupon.save()
 
@@ -68,9 +62,7 @@ class CouponServiceTest(BaseCouponTestCase):
 
     def test_discount_never_exceeds_subtotal(self):
 
-        self.coupon.discount_type = (
-            Coupon.DiscountType.FIXED
-        )
+        self.coupon.discount_type = Coupon.DiscountType.FIXED
 
         self.coupon.discount_value = Decimal("5000.00")
 
@@ -111,9 +103,7 @@ class CouponServiceTest(BaseCouponTestCase):
 
     def test_expired_coupon(self):
 
-        self.coupon.valid_to = (
-            timezone.now() - timedelta(days=1)
-        )
+        self.coupon.valid_to = timezone.now() - timedelta(days=1)
 
         self.coupon.save()
 

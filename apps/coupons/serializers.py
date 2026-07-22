@@ -3,9 +3,7 @@ from rest_framework import serializers
 from .models import Coupon
 
 
-class CouponSerializer(
-    serializers.ModelSerializer
-):
+class CouponSerializer(serializers.ModelSerializer):
 
     class Meta:
 
@@ -24,6 +22,7 @@ class CouponSerializer(
             "valid_from",
             "valid_to",
         ]
+
 
 class ValidateCouponSerializer(serializers.Serializer):
 

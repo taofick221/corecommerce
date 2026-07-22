@@ -1,14 +1,7 @@
 import factory
 
-from apps.cart.models import (
-    Cart,
-    CartItem,
-)
-
-from apps.products.tests.factories import (
-    UserFactory,
-    ProductVariantFactory,
-)
+from apps.cart.models import Cart, CartItem
+from apps.products.tests.factories import ProductVariantFactory, UserFactory
 
 
 class CartFactory(factory.django.DjangoModelFactory):

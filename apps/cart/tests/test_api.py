@@ -1,8 +1,9 @@
-from rest_framework import status
 from django.urls import reverse
-from .base import BaseCartTestCase
+from rest_framework import status
 
 from apps.products.tests.factories import ProductVariantFactory
+
+from .base import BaseCartTestCase
 
 
 class CartDetailAPITest(BaseCartTestCase):
@@ -56,7 +57,6 @@ class CartDetailAPITest(BaseCartTestCase):
             response.data["subtotal"],
             self.cart.subtotal,
         )
-
 
     def test_cart_returns_total(self):
         self.client.force_authenticate(self.user)
@@ -226,6 +226,7 @@ class AddToCartAPITest(BaseCartTestCase):
             response.status_code,
             status.HTTP_401_UNAUTHORIZED,
         )
+
     from django.urls import reverse
 
 

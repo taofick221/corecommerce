@@ -2,10 +2,7 @@ from django.test import TestCase
 
 from apps.cart.selectors import get_user_cart
 
-from .factories import (
-    CartFactory,
-    CartItemFactory,
-)
+from .factories import CartFactory, CartItemFactory
 
 
 class CartSelectorTest(TestCase):

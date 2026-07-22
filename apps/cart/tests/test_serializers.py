@@ -1,22 +1,14 @@
 from django.test import TestCase
 
-from rest_framework.exceptions import ValidationError
-
 from apps.cart.serializers import (
+    AddToCartSerializer,
     CartItemSerializer,
     CartSerializer,
-    AddToCartSerializer,
     UpdateCartItemSerializer,
 )
+from apps.products.tests.factories import ProductVariantFactory
 
-from .factories import (
-    CartFactory,
-    CartItemFactory,
-)
-
-from apps.products.tests.factories import (
-    ProductVariantFactory,
-)
+from .factories import CartFactory, CartItemFactory
 
 
 class CartItemSerializerTest(TestCase):

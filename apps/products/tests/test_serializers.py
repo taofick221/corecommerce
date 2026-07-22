@@ -1,15 +1,12 @@
 from django.test import TestCase
 
-from .factories import (
-    CategoryFactory,
-    BrandFactory,
-)
-
 from apps.products.serializers import (
-    ProductVariantSerializer,
     ProductImageSerializer,
+    ProductVariantSerializer,
     ProductWriteSerializer,
 )
+
+from .factories import BrandFactory, CategoryFactory
 
 
 class ProductVariantSerializerTest(TestCase):
@@ -26,9 +23,7 @@ class ProductVariantSerializerTest(TestCase):
             }
         )
 
-        self.assertTrue(
-            serializer.is_valid()
-        )
+        self.assertTrue(serializer.is_valid())
 
     def test_negative_price(self):
         serializer = ProductVariantSerializer(
@@ -42,9 +37,7 @@ class ProductVariantSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
     def test_negative_stock(self):
         serializer = ProductVariantSerializer(
@@ -58,9 +51,8 @@ class ProductVariantSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
+
 
 class ProductImageSerializerTest(TestCase):
 
@@ -73,9 +65,7 @@ class ProductImageSerializerTest(TestCase):
             }
         )
 
-        self.assertTrue(
-            serializer.is_valid()
-        )
+        self.assertTrue(serializer.is_valid())
 
     def test_negative_order(self):
         serializer = ProductImageSerializer(
@@ -86,9 +76,7 @@ class ProductImageSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
 
 class ProductWriteSerializerTest(TestCase):
@@ -124,26 +112,18 @@ class ProductWriteSerializerTest(TestCase):
         }
 
     def test_valid_payload(self):
-        serializer = ProductWriteSerializer(
-            data=self.get_payload()
-        )
+        serializer = ProductWriteSerializer(data=self.get_payload())
 
-        self.assertTrue(
-            serializer.is_valid()
-        )
+        self.assertTrue(serializer.is_valid())
 
     def test_without_variant(self):
         payload = self.get_payload()
 
         payload["variants"] = []
 
-        serializer = ProductWriteSerializer(
-            data=payload
-        )
+        serializer = ProductWriteSerializer(data=payload)
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
     def test_duplicate_sku(self):
         payload = self.get_payload()

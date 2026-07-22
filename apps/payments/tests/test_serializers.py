@@ -1,10 +1,7 @@
 from django.test import TestCase
 
 from apps.payments.models import Payment
-from apps.payments.serializers import (
-    CreatePaymentSerializer,
-    PaymentSerializer,
-)
+from apps.payments.serializers import CreatePaymentSerializer, PaymentSerializer
 
 from .factories import PaymentFactory
 
@@ -19,9 +16,7 @@ class CreatePaymentSerializerTest(TestCase):
             }
         )
 
-        self.assertTrue(
-            serializer.is_valid()
-        )
+        self.assertTrue(serializer.is_valid())
 
     def test_invalid_provider(self):
 
@@ -31,9 +26,7 @@ class CreatePaymentSerializerTest(TestCase):
             }
         )
 
-        self.assertFalse(
-            serializer.is_valid()
-        )
+        self.assertFalse(serializer.is_valid())
 
         self.assertIn(
             "provider",
@@ -47,9 +40,7 @@ class PaymentSerializerTest(TestCase):
 
         payment = PaymentFactory()
 
-        data = PaymentSerializer(
-            payment
-        ).data
+        data = PaymentSerializer(payment).data
 
         self.assertEqual(
             data["order_id"],

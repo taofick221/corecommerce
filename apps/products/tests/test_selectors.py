@@ -1,15 +1,9 @@
 from django.core.cache import cache
 from django.test import TestCase
 
-from apps.products.selectors import (
-    get_categories,
-    get_brands,
-)
+from apps.products.selectors import get_brands, get_categories
 
-from .factories import (
-    CategoryFactory,
-    BrandFactory,
-)
+from .factories import BrandFactory, CategoryFactory
 
 
 class ProductSelectorTest(TestCase):

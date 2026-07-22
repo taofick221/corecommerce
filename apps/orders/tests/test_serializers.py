@@ -2,14 +2,11 @@ from django.test import TestCase
 
 from apps.orders.serializers import (
     CreateOrderSerializer,
-    OrderSerializer,
     OrderItemSerializer,
+    OrderSerializer,
 )
 
-from .factories import (
-    OrderFactory,
-    OrderItemFactory,
-)
+from .factories import OrderFactory, OrderItemFactory
 
 
 class CreateOrderSerializerTest(TestCase):

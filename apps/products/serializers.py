@@ -1,6 +1,6 @@
-from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
 from .models import Product, ProductImage, ProductVariant
 
 
@@ -73,8 +73,7 @@ class ProductWriteSerializer(serializers.ModelSerializer):
         variants = data.get("variants", [])
         errors = {}
         if not self.instance and not variants:
-            raise ValidationError(
-                {"variants": "At least one variant required"})
+            raise ValidationError({"variants": "At least one variant required"})
         if variants:
             cleaned = []
             for i, v in enumerate(variants):
@@ -99,8 +98,7 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             skus = [sku for _, _, sku, _ in cleaned if sku]
             if len(skus) != len(set(skus)):
                 errors["sku"] = "Duplicate SKU found"
-            combos = [(size, color)
-                      for size, color, _, _ in cleaned if size and color]
+            combos = [(size, color) for size, color, _, _ in cleaned if size and color]
             if len(combos) != len(set(combos)):
                 errors["variant_combination"] = "Dublicate size and color found"
             if errors:
@@ -109,10 +107,12 @@ class ProductWriteSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         from .services import create_product
+
         return create_product(validated_data)
 
     def update(self, instance, validated_data):
         from .services import update_product
+
         return update_product(instance, validated_data)
 
 

@@ -1,7 +1,8 @@
-import factory
-from decimal import Decimal
-from django.utils import timezone
 from datetime import timedelta
+from decimal import Decimal
+
+import factory
+from django.utils import timezone
 
 from apps.coupons.models import Coupon
 
@@ -11,13 +12,9 @@ class CouponFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Coupon
 
-    code = factory.Sequence(
-        lambda n: f"COUPON{n}"
-    )
+    code = factory.Sequence(lambda n: f"COUPON{n}")
 
-    discount_type = (
-        Coupon.DiscountType.PERCENTAGE
-    )
+    discount_type = Coupon.DiscountType.PERCENTAGE
 
     discount_value = Decimal("10.00")
 
@@ -31,10 +28,6 @@ class CouponFactory(factory.django.DjangoModelFactory):
 
     is_active = True
 
-    valid_from = factory.LazyFunction(
-        lambda: timezone.now() - timedelta(days=1)
-    )
+    valid_from = factory.LazyFunction(lambda: timezone.now() - timedelta(days=1))
 
-    valid_to = factory.LazyFunction(
-        lambda: timezone.now() + timedelta(days=30)
-    )
+    valid_to = factory.LazyFunction(lambda: timezone.now() + timedelta(days=30))

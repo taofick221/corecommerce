@@ -1,12 +1,20 @@
 from django.test import TestCase
-from rest_framework.exceptions import ValidationError
 from django.utils import timezone
+from rest_framework.exceptions import ValidationError
+
 from apps.products.services import create_product
+
 from .factories import (
-    ProductFactory,
-    CategoryFactory,
     BrandFactory,
+    CategoryFactory,
+    ProductFactory,
+    ProductImageFactory,
+    ProductVariantFactory,
 )
+
+from apps.products.services import update_product
+
+from apps.products.services import soft_delete_product
 
 
 class CreateProductServiceTest(TestCase):
@@ -42,9 +50,7 @@ class CreateProductServiceTest(TestCase):
         }
 
     def test_create_product_success(self):
-        product = create_product(
-            self.get_payload()
-        )
+        product = create_product(self.get_payload())
 
         self.assertEqual(
             product.name,
@@ -125,7 +131,6 @@ class CreateProductServiceTest(TestCase):
         ):
             create_product(payload)
 
-
     def test_multiple_default_variant(self):
         payload = self.get_payload()
 
@@ -199,18 +204,14 @@ class CreateProductServiceTest(TestCase):
         )
 
     def test_product_slug_created(self):
-        product = create_product(
-            self.get_payload()
-        )
+        product = create_product(self.get_payload())
 
         self.assertTrue(
             product.slug,
         )
 
     def test_variant_saved(self):
-        product = create_product(
-            self.get_payload()
-        )
+        product = create_product(self.get_payload())
 
         variant = product.variants.first()
 
@@ -230,9 +231,7 @@ class CreateProductServiceTest(TestCase):
         )
 
     def test_primary_image_saved(self):
-        product = create_product(
-            self.get_payload()
-        )
+        product = create_product(self.get_payload())
 
         image = product.images.first()
 
@@ -241,9 +240,7 @@ class CreateProductServiceTest(TestCase):
         )
 
     def test_create_returns_product_instance(self):
-        product = create_product(
-            self.get_payload()
-        )
+        product = create_product(self.get_payload())
 
         self.assertIsNotNone(
             product.id,
@@ -253,28 +250,6 @@ class CreateProductServiceTest(TestCase):
             product.__class__.__name__,
             "Product",
         )
-
-from rest_framework.exceptions import ValidationError
-
-from apps.products.services import update_product
-
-from .factories import (
-    ProductFactory,
-    ProductVariantFactory,
-    ProductImageFactory,
-)
-
-
-from django.test import TestCase
-from rest_framework.exceptions import ValidationError
-
-from apps.products.services import update_product
-
-from .factories import (
-    ProductFactory,
-    ProductVariantFactory,
-    ProductImageFactory,
-)
 
 
 class UpdateProductServiceTest(TestCase):
@@ -403,6 +378,7 @@ class UpdateProductServiceTest(TestCase):
                 self.product,
                 payload,
             )
+
     def test_add_new_variant(self):
         payload = self.get_payload()
 
@@ -567,11 +543,6 @@ class UpdateProductServiceTest(TestCase):
                 self.product,
                 payload,
             )
-    from django.utils import timezone
-
-from apps.products.services import soft_delete_product
-
-from .factories import ProductFactory
 
 
 class SoftDeleteProductServiceTest(TestCase):

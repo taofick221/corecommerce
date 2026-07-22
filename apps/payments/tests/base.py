@@ -1,13 +1,9 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
-from apps.orders.tests.factories import (
-    OrderFactory,
-)
+from apps.orders.tests.factories import OrderFactory
 
-from .factories import (
-    PaymentFactory,
-)
+from .factories import PaymentFactory
 
 
 class BasePaymentTestCase(APITestCase):
