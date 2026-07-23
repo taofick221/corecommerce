@@ -2,12 +2,8 @@ from django.test import TestCase
 
 from apps.products.filters import ProductFilter
 
-from .factories import (
-    BrandFactory,
-    CategoryFactory,
-    ProductFactory,
-    ProductVariantFactory,
-)
+from .factories import (BrandFactory, CategoryFactory, ProductFactory,
+                        ProductVariantFactory)
 
 
 class ProductFilterTest(TestCase):

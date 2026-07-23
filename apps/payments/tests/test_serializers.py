@@ -1,7 +1,8 @@
 from django.test import TestCase
 
 from apps.payments.models import Payment
-from apps.payments.serializers import CreatePaymentSerializer, PaymentSerializer
+from apps.payments.serializers import (CreatePaymentSerializer,
+                                       PaymentSerializer)
 
 from .factories import PaymentFactory
 

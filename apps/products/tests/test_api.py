@@ -1,7 +1,8 @@
-from django.utils import timezone
 import uuid
 
+from django.utils import timezone
 from rest_framework import status
+
 from .base import BaseProductTestCase
 
 

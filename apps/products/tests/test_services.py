@@ -2,19 +2,11 @@ from django.test import TestCase
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
-from apps.products.services import create_product
+from apps.products.services import (create_product, soft_delete_product,
+                                    update_product)
 
-from .factories import (
-    BrandFactory,
-    CategoryFactory,
-    ProductFactory,
-    ProductImageFactory,
-    ProductVariantFactory,
-)
-
-from apps.products.services import update_product
-
-from apps.products.services import soft_delete_product
+from .factories import (BrandFactory, CategoryFactory, ProductFactory,
+                        ProductImageFactory, ProductVariantFactory)
 
 
 class CreateProductServiceTest(TestCase):

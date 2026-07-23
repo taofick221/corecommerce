@@ -2,11 +2,8 @@ from rest_framework.exceptions import ValidationError
 
 from apps.orders.models import Order
 from apps.payments.models import Payment
-from apps.payments.services import (
-    complete_payment,
-    create_payment,
-    generate_transaction_id,
-)
+from apps.payments.services import (complete_payment, create_payment,
+                                    generate_transaction_id)
 
 from .base import BasePaymentTestCase
 

@@ -3,7 +3,6 @@ from unittest.mock import patch
 from django.utils import timezone
 from rest_framework import status
 
-
 from .base import BaseOrderTestCase
 
 

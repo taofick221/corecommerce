@@ -1,6 +1,7 @@
 import factory
 
-from apps.products.models import Brand, Category, Product, ProductImage, ProductVariant
+from apps.products.models import (Brand, Category, Product, ProductImage,
+                                  ProductVariant)
 from apps.users.models import User
 
 
