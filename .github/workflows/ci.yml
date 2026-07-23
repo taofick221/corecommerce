@@ -11,7 +11,8 @@ on:
 jobs:
   quality-check:
     runs-on: ubuntu-latest
-
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -44,3 +45,6 @@ jobs:
 
       - name: Run Tests
         run: pytest
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
