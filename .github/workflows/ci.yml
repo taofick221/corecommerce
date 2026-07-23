@@ -31,6 +31,11 @@ jobs:
         image: redis:7
         ports:
           - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
 
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -61,13 +66,21 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements/dev.txt
 
-      - name: Check Code Formatting (Black)
+      - name: Install Redis CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y redis-tools
+
+      - name: Create logs directory
+        run: mkdir -p logs
+
+      - name: Check Code Formatting
         run: black --check .
 
-      - name: Check Import Sorting (isort)
+      - name: Check Import Sorting
         run: isort . --check-only
 
-      - name: Lint Code (Flake8)
+      - name: Lint Code
         run: flake8 .
 
       - name: Django System Check
@@ -76,8 +89,27 @@ jobs:
       - name: Check Missing Migrations
         run: python manage.py makemigrations --check --dry-run
 
+      - name: Show Docker Containers
+        run: docker ps -a
+
+      - name: Wait for Redis
+        run: |
+          for i in {1..30}; do
+            if redis-cli -h localhost ping; then
+              echo "Redis is ready!"
+              break
+            fi
+            echo "Waiting for Redis..."
+            sleep 2
+          done
+
+      - name: Verify Redis
+        run: |
+          redis-cli -h localhost ping
+          redis-cli -h localhost info server
+
       - name: Apply Migrations
         run: python manage.py migrate
 
       - name: Run Tests
-        run: pytest 
+        run: pytest -v
