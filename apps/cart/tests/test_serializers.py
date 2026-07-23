@@ -1,7 +1,11 @@
 from django.test import TestCase
 
-from apps.cart.serializers import (AddToCartSerializer, CartItemSerializer,
-                                   CartSerializer, UpdateCartItemSerializer)
+from apps.cart.serializers import (
+    AddToCartSerializer,
+    CartItemSerializer,
+    CartSerializer,
+    UpdateCartItemSerializer,
+)
 from apps.products.tests.factories import ProductVariantFactory
 
 from .factories import CartFactory, CartItemFactory

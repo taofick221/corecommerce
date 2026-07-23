@@ -3,8 +3,13 @@ from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
 from apps.cart.models import CartItem
-from apps.cart.services import (add_to_cart, clear_cart, get_or_create_cart,
-                                remove_cart_item, update_cart_item)
+from apps.cart.services import (
+    add_to_cart,
+    clear_cart,
+    get_or_create_cart,
+    remove_cart_item,
+    update_cart_item,
+)
 from apps.products.tests.factories import ProductVariantFactory, UserFactory
 
 from .factories import CartFactory, CartItemFactory

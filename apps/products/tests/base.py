@@ -1,8 +1,13 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
-from .factories import (AdminFactory, ProductFactory, ProductImageFactory,
-                        ProductVariantFactory, UserFactory)
+from .factories import (
+    AdminFactory,
+    ProductFactory,
+    ProductImageFactory,
+    ProductVariantFactory,
+    UserFactory,
+)
 
 
 class BaseProductTestCase(APITestCase):

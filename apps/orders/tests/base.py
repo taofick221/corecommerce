@@ -2,8 +2,11 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 
 from apps.cart.tests.factories import CartFactory, CartItemFactory
-from apps.products.tests.factories import (ProductFactory,
-                                           ProductVariantFactory, UserFactory)
+from apps.products.tests.factories import (
+    ProductFactory,
+    ProductVariantFactory,
+    UserFactory,
+)
 
 from .factories import OrderFactory, OrderItemFactory
 

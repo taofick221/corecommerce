@@ -1,8 +1,12 @@
 from django.core.cache import cache
 from django.test import TestCase
 
-from apps.products.selectors import (BRAND_CACHE_KEY, CATEGORY_CACHE_KEY,
-                                     get_brands, get_categories)
+from apps.products.selectors import (
+    BRAND_CACHE_KEY,
+    CATEGORY_CACHE_KEY,
+    get_brands,
+    get_categories,
+)
 
 from .factories import BrandFactory, CategoryFactory
 

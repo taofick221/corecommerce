@@ -1,8 +1,10 @@
 from django.test import TestCase
 
-from apps.products.serializers import (ProductImageSerializer,
-                                       ProductVariantSerializer,
-                                       ProductWriteSerializer)
+from apps.products.serializers import (
+    ProductImageSerializer,
+    ProductVariantSerializer,
+    ProductWriteSerializer,
+)
 
 from .factories import BrandFactory, CategoryFactory
 
