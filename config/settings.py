@@ -26,9 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-t^nfv-g7@6&qw=eiauyh^e%9$%qgxl2vh78^h36#d2z7pm7-y!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", cast=bool)
-
+SECRET_KEY = config(
+    "SECRET_KEY",
+    default="django-insecure-development-key",
+)
+DEBUG = config("DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = []
 
 
@@ -53,8 +55,15 @@ INSTALLED_APPS = [
     "drf_spectacular",
 ]
 AUTH_USER_MODEL = "users.User"
-CELERY_BROKER_URL = "redis://redis:6379/0"
-CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+CELERY_BROKER_URL = config(
+    "CELERY_BROKER_URL",
+    default="redis://localhost:6379/0",
+)
+
+CELERY_RESULT_BACKEND = config(
+    "CELERY_RESULT_BACKEND",
+    default="redis://localhost:6379/1",
+)
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -213,7 +222,10 @@ DEFAULT_FROM_EMAIL = "noreply@corecommerce.com"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/2",
+        "LOCATION": config(
+            "REDIS_CACHE_URL",
+            default="redis://localhost:6379/2",
+        ),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
