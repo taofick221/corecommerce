@@ -89,9 +89,6 @@ jobs:
       - name: Check Missing Migrations
         run: python manage.py makemigrations --check --dry-run
 
-      - name: Show Docker Containers
-        run: docker ps -a
-
       - name: Wait for Redis
         run: |
           for i in {1..30}; do
@@ -102,11 +99,6 @@ jobs:
             echo "Waiting for Redis..."
             sleep 2
           done
-
-      - name: Verify Redis
-        run: |
-          redis-cli -h localhost ping
-          redis-cli -h localhost info server
 
       - name: Apply Migrations
         run: python manage.py migrate

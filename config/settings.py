@@ -246,19 +246,27 @@ LOGGING = {
         },
     },
     "handlers": {
-        "file": {
-            "level": "INFO",
-            "class": "logging.FileHandler",
-            "filename": BASE_DIR / "logs/app.log",
-            "formatter": "standard",
-        },
         "console": {
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
     },
     "root": {
-        "handlers": ["console", "file"],
+        "handlers": ["console"],
         "level": "INFO",
     },
 }
+
+# Enable file logging only outside debug mode
+if not DEBUG:
+    log_dir = BASE_DIR / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    LOGGING["handlers"]["file"] = {
+        "level": "INFO",
+        "class": "logging.FileHandler",
+        "filename": log_dir / "app.log",
+        "formatter": "standard",
+    }
+
+    LOGGING["root"]["handlers"].append("file")
